@@ -80,8 +80,11 @@ def carregar_validacao(pasta):
         if pd.notna(validacao):
             validacao = str(validacao).strip()
             if pd.notna(vendor_num) and str(vendor_num).strip() not in ['-', '', 'nan']:
-                vendor_key = str(vendor_num).strip().zfill(6)
-                val_by_vendor[vendor_key] = validacao
+                try:
+                    vendor_key = str(int(float(vendor_num))).zfill(6)
+                    val_by_vendor[vendor_key] = validacao
+                except (ValueError, TypeError):
+                    pass
             if pd.notna(suffix) and str(suffix).strip() not in ['-', '', 'nan']:
                 try:
                     val_by_suffix[int(float(suffix))] = validacao
