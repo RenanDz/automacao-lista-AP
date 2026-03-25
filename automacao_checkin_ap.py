@@ -269,6 +269,10 @@ def calcular_colunas(df, kyriba_country, kyriba_credit, currency_map,
         if row['Status'] == 'PAID':
             return 'PAID'
 
+        # Valor negativo no Amount($) ou Original Amount → "CM" (Credit Memo)
+        if row['Amount($)'] < 0 or row['Original Amount'] < 0:
+            return 'CM'
+
         validacao = str(row.get('Validação', ''))
 
         # NOT PAY → "No"
